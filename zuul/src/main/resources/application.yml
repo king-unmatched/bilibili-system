@@ -15,6 +15,6 @@ zuul:
     web:
       path: /web/**
       serviceId: web
-    order:
+    feigin:
       path: /feigin/**
       serviceId: feigin

@@ -1,5 +1,5 @@
 server:
-  port: 8776
+  port: 8777
 
 spring:
   application:
@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/liuc12580/config-2004.git
+          uri: https://github.com/king-unmatched/config-service.git
           search-paths: /
           username:
           password:

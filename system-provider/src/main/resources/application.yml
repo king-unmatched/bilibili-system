@@ -1,7 +1,6 @@
 server:
-  port: 8772
+  port: 8767
 
 spring:
   application:
     name: system-provider
-
