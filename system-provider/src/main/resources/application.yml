@@ -1,0 +1,7 @@
+server:
+  port: 8772
+
+spring:
+  application:
+    name: system-provider
+

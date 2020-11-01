@@ -1,0 +1,6 @@
+server:
+  port: 8780
+
+spring:
+  application:
+    name: web
