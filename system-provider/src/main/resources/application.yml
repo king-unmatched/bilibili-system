@@ -1,6 +1,0 @@
-server:
-  port: 8767
-
-spring:
-  application:
-    name: system-provider
