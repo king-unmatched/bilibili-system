@@ -1,11 +1,11 @@
 
-# 端口
+# 绔彛
 server:
   port: 8000
 
 spring:
   application:
-    # 应用名称
+    # 搴旂敤鍚嶇О
     name: config
   cloud:
     config:
