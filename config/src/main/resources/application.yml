@@ -1,0 +1,19 @@
+
+# 端口
+server:
+  port: 8000
+
+spring:
+  application:
+    # 应用名称
+    name: config
+  cloud:
+    config:
+      server:
+       git:
+         uri: https://github.com/wangdengke2000/config-2004.git
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
