@@ -14,14 +14,29 @@
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 <script src="../../jss/jquery.min.js"></script>
 <body>
-<div id="main" style="width: 800px;height:400px;" align="center"></div>
+<div>
+    <input type="button" onclick="daoc()" value="动漫信息导出">
+    <div id="main" style="width: 800px;height:400px;" align="center"></div>
+</div>
+<div>
+    <input type="button" onclick="daochu()" value="电影信息导出">
 <div id="container" style="min-width:400px;height:400px"></div>
+</div>
 </body>
 <script type="text/javascript">
     $(function () {
         selvideo();
         selcomicvd();
     })
+//动漫信息导出
+    function daoc(){
+        location.href="/user/exsynthesize";
+    }
+//电影信息导出
+    function daochu() {
+         location.href="/user/exdianying";
+    }
+    //电影折线图
     function selvideo(){
         $.ajax({
             url: "/user/selVideoBean",
@@ -65,6 +80,8 @@
         })
 
     }
+
+    //动漫饼状图
     function selcomicvd() {
         $(document).ready(function(){
             // 基于准备好的dom，初始化echarts实例
