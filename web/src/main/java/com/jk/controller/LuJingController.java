@@ -18,4 +18,11 @@ public class LuJingController {
     {
         return "tree/index";
     }
+
+
+
+    @RequestMapping("synthesize")
+    public String synthesize(){
+        return "tree/synthesize";
+    }
 }

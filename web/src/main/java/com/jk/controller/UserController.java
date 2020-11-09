@@ -5,8 +5,10 @@ package com.jk.controller;
 
 
 
+import com.jk.entity.ComicvBean;
 import com.jk.entity.TreeBean;
 import com.jk.entity.UserBean;
+import com.jk.entity.VideoBean;
 import com.jk.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -50,4 +52,16 @@ public class UserController {
       UserBean userBean= (UserBean) SecurityUtils.getSubject().getPrincipal();
       return userService.serTreeBeanList(userBean.getId());
    }
+
+
+    @RequestMapping("selVideoBean")
+    public List<VideoBean> selVideoBean(){
+
+       return userService.selVideoBean();
+    }
+    @RequestMapping("selcomicv")
+    public List<ComicvBean> selcomicv(){
+       return userService.selcomicv();
+    }
+
 }

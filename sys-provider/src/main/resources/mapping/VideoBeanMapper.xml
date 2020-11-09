@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.VideoBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.VideoBean" >
+    <id column="video_id" property="videoId" jdbcType="INTEGER" />
+    <result column="video_img" property="videoImg" jdbcType="VARCHAR" />
+    <result column="video_duration" property="videoDuration" jdbcType="VARCHAR" />
+    <result column="video_xiaoimg" property="videoXiaoimg" jdbcType="VARCHAR" />
+    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+    <result column="video_typeid" property="videoTypeid" jdbcType="VARCHAR" />
+    <result column="video_heat" property="videoHeat" jdbcType="INTEGER" />
+    <result column="video_status" property="videoStatus" jdbcType="INTEGER" />
+    <result column="video_title" property="videoTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    video_id, video_img, video_duration, video_xiaoimg, video_url, video_name, video_typeid, 
+    video_heat, video_status, video_title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dy_sy_video
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dy_sy_video
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.VideoBean" >
+    insert into dy_sy_video (video_id, video_img, video_duration, 
+      video_xiaoimg, video_url, video_name, 
+      video_typeid, video_heat, video_status, 
+      video_title)
+    values (#{videoId,jdbcType=INTEGER}, #{videoImg,jdbcType=VARCHAR}, #{videoDuration,jdbcType=VARCHAR}, 
+      #{videoXiaoimg,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, #{videoName,jdbcType=VARCHAR}, 
+      #{videoTypeid,jdbcType=VARCHAR}, #{videoHeat,jdbcType=INTEGER}, #{videoStatus,jdbcType=INTEGER}, 
+      #{videoTitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.VideoBean" >
+    insert into dy_sy_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="videoImg != null" >
+        video_img,
+      </if>
+      <if test="videoDuration != null" >
+        video_duration,
+      </if>
+      <if test="videoXiaoimg != null" >
+        video_xiaoimg,
+      </if>
+      <if test="videoUrl != null" >
+        video_url,
+      </if>
+      <if test="videoName != null" >
+        video_name,
+      </if>
+      <if test="videoTypeid != null" >
+        video_typeid,
+      </if>
+      <if test="videoHeat != null" >
+        video_heat,
+      </if>
+      <if test="videoStatus != null" >
+        video_status,
+      </if>
+      <if test="videoTitle != null" >
+        video_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="videoId != null" >
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="videoImg != null" >
+        #{videoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDuration != null" >
+        #{videoDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="videoXiaoimg != null" >
+        #{videoXiaoimg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null" >
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoName != null" >
+        #{videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoTypeid != null" >
+        #{videoTypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="videoHeat != null" >
+        #{videoHeat,jdbcType=INTEGER},
+      </if>
+      <if test="videoStatus != null" >
+        #{videoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="videoTitle != null" >
+        #{videoTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.VideoBean" >
+    update dy_sy_video
+    <set >
+      <if test="videoImg != null" >
+        video_img = #{videoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDuration != null" >
+        video_duration = #{videoDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="videoXiaoimg != null" >
+        video_xiaoimg = #{videoXiaoimg,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null" >
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoName != null" >
+        video_name = #{videoName,jdbcType=VARCHAR},
+      </if>
+      <if test="videoTypeid != null" >
+        video_typeid = #{videoTypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="videoHeat != null" >
+        video_heat = #{videoHeat,jdbcType=INTEGER},
+      </if>
+      <if test="videoStatus != null" >
+        video_status = #{videoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="videoTitle != null" >
+        video_title = #{videoTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.VideoBean" >
+    update dy_sy_video
+    set video_img = #{videoImg,jdbcType=VARCHAR},
+      video_duration = #{videoDuration,jdbcType=VARCHAR},
+      video_xiaoimg = #{videoXiaoimg,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      video_name = #{videoName,jdbcType=VARCHAR},
+      video_typeid = #{videoTypeid,jdbcType=VARCHAR},
+      video_heat = #{videoHeat,jdbcType=INTEGER},
+      video_status = #{videoStatus,jdbcType=INTEGER},
+      video_title = #{videoTitle,jdbcType=VARCHAR}
+    where video_id = #{videoId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selVideoBean" resultType="VideoBean">
+    select * from dy_sy_video
+ </select>
+</mapper>
