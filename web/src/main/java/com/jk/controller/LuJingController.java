@@ -1,5 +1,6 @@
 package com.jk.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +23,7 @@ public class LuJingController {
 
 
     @RequestMapping("synthesize")
+    @RequiresPermissions("page:synthesize")
     public String synthesize(){
         return "tree/synthesize";
     }

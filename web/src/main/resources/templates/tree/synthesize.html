@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,11 +15,11 @@
 <script src="../../jss/jquery.min.js"></script>
 <body>
 <div>
-    <input type="button" onclick="daoc()" value="动漫信息导出">
+    <input type="button" shiro:hasPermissions="exsy:moviedaochu" onclick="daoc()" value="动漫信息导出">
     <div id="main" style="width: 800px;height:400px;" align="center"></div>
 </div>
-<div>
-    <input type="button" onclick="daochu()" value="电影信息导出">
+<div >
+    <input type="button" shiro:hasPermissions="exsy:anmiedaochu" onclick="daochu()" value="电影信息导出">
 <div id="container" style="min-width:400px;height:400px"></div>
 </div>
 </body>
@@ -49,8 +49,8 @@
                     srt.push(data[i].videoName);
                     vvv.push(data[i].videoHeat);
 
-                }i
-                alert(vvv);
+                }
+
                 var chart = Highcharts.chart('container', {
                     title: {
                         text: '电影浏览量统计图'
@@ -130,7 +130,7 @@
                                             emphasis: {
                                                 shadowBlur: 10,
                                                 shadowOffsetX: 0,
-                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                shadowColor: 'rgba(0,0,0,0.64)'
                                             }
                                         }
                                     }

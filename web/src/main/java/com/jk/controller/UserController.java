@@ -35,6 +35,13 @@ import java.util.List;
 public class UserController {
    @Autowired
     private UserService userService;
+
+    /**
+     * 用户登录验证
+     *
+     * @param user
+     * @return
+     */
    @RequestMapping("seluser")
    public String seluser(UserBean user){
        Subject subject = SecurityUtils.getSubject();
@@ -52,18 +59,31 @@ public class UserController {
        }
 
    }
-@RequestMapping("serTreeBeanList")
+    /**
+     *  权限树
+      */
+
+   @RequestMapping("serTreeBeanList")
    public List<TreeBean> serTreeBeanList(){
       UserBean userBean= (UserBean) SecurityUtils.getSubject().getPrincipal();
       return userService.serTreeBeanList(userBean.getId());
    }
 
+    /**
+     * 电影信息查询
+     *
+     */
 
     @RequestMapping("selVideoBean")
     public List<VideoBean> selVideoBean(){
 
        return userService.selVideoBean();
     }
+
+    /**
+     * 动漫查询
+     * @return
+     */
     @RequestMapping("selcomicv")
     public List<ComicvBean> selcomicv(){
        return userService.selcomicv();
@@ -74,6 +94,7 @@ public class UserController {
      * @param response
      */
     @RequestMapping("exsynthesize")
+    @RequiresPermissions("exsy:moviedaochu")
     public void exsynthesize(HttpServletResponse response){
           List<ComicvBean> com=userService.selcomicv();
         String jsonString=JSONArray.toJSONString(com);
@@ -90,6 +111,7 @@ public class UserController {
      * @param response
      */
     @RequestMapping("exdianying")
+    @RequiresPermissions("exsy:anmiedaochu")
     public void exdianying(HttpServletResponse response){
        List<VideoBean> list=userService.selVideoBean();
        String jsonarray=JSONArray.toJSONString(list);
