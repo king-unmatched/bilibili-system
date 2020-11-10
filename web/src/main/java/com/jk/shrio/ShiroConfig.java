@@ -41,6 +41,7 @@ public class ShiroConfig {
         map.put("/css/**", "anon");
         map.put("/images/**", "anon");
         map.put("/img/**", "anon");
+        map.put("/jss/**", "anon");
         //其他的都拦截
         map.put("/**", "authc");
         // 将自定义的过滤器设置到shiro过滤器链中

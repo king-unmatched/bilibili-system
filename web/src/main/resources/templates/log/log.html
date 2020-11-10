@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../jss/vue/vue.min.js"></script>
+    <script src="../jss/jquery.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../jss/css/bootstarp/bootstrap.min.css">
+    <script src="../jss/bootstraps/bootstrap-paginator.js"></script>
+
+</head>
+<body>
+<div id="app" class="container">
+    <h1>Mongodb管理</h1>
+    <form action="" id="list_form">
+        <div class="form-group">
+            <label for="className" class="col-sm-1 control-label">名称：</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="className" v-model="className" placeholder="请输入名称">
+            </div>
+        </div>
+        <a class="btn btn-default" @click="piliang()">删除</a>
+        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+        <button type="button" class="btn btn-default" onclick="selectlistAll();">搜索</button>
+    </form>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th><input type="checkbox" name="check" id="qx" onclick="quanxuan()"></th>
+            <th>序号</th>
+            <th>类名</th>
+            <th>方法名</th>
+            <th>传的参数</th>
+            <th>返回的参数</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="we in log">
+            <td><input type="checkbox" name="check" :value="we.id"></td>
+            <td>{{we.id}}</td>
+            <td>{{we.className}}</td>
+            <td>{{we.methodName}}</td>
+            <td>{{we.requestParam}}</td>
+            <td>{{we.responseParam}}</td>
+            <td>
+            <a  class="btn btn-default" @click="shanchu(we.id)">删除</a>
+            </td>
+        </tr>
+    </table>
+    <div class="col-md-6">
+        <strong>当前第 {{currPage}}页,每页<select style="width:50px;" v-model="pageSize" @change="shuaxin()">
+            <option value="3">3</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+        </select>条,共 {{totalPage}} 页.一共 {{total}} 条记录
+        </strong>
+    </div>
+    <div id="example" style="text-align: right"> <ul id="pageLimit"></ul> </div>
+</div>
+</div>
+</body>
+<script type="text/javascript">
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            log:"",
+            totalPage:"",
+            total:"",
+            currPage:"1",
+            pageSize:"3",
+            className:""
+        }
+    })
+    function piliang(){
+        var arr = document.getElementsByName("check");
+        var ids="";
+        for ( var i = 0; i < arr.length; i++) {
+            if (arr[i].checked) {
+                ids+=ids==""?arr[i].value:","+arr[i].value;
+            }
+        }
+        alert(ids);
+        if (ids=="") {
+            alert("请至少选中一条！");
+            return;
+        }
+
+        $.ajax({
+            url:"../log/delete",
+            type:"post",
+            data:{id:ids},
+            success:function(){
+                alert("Nice成功");
+                selectlistAll();
+
+            }
+
+        })
+    }
+    var vs = new Vue({
+        el: '#ppa',
+        data: {
+            list:''
+        }
+    })
+
+    function shuaxin(){
+        selectlistAll();
+    }
+
+    function shanchu(ids){
+        $.ajax({
+            url:"../log/delete",
+            type:"post",
+            data:{id:ids},
+            success:function(){
+                alert("Nice成功");
+                selectlistAll();
+            }
+
+        })
+    }
+    $(function(){
+        selectlistAll();
+    })
+    function selectlistAll() {
+            $.ajax({
+                type:"post",
+                url:"/log/listLog",
+                data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"className":vm.className},
+                dataType:"json",
+                success: function(result) {
+                    vm.log = result.rows;
+                    vm.totalPage = result.totalPage;
+                    vm.total = result.total;
+                    vm.currPage = result.currPage;
+                    vm.pageSize = result.pageSize;
+                    setPage(result.currPage,result.totalPage,result.pageSize,selectlistAll);
+                },
+                error : function() {
+                    alert("系统错误，请联系管理员！");
+                }
+            })
+    }
+
+    /**
+     *
+     * @param pageCurrent 当前所在页
+     * @param pageSum 总页数
+     * @param callback 调用ajax
+     */
+    function setPage(pageCurrent, pageSum, pageSize, callback) {
+        $('#pageLimit').bootstrapPaginator({
+            currentPage: pageCurrent,//当前的请求页面。
+            totalPages: pageSum,//一共多少页。
+            size:"normal",//应该是页眉的大小。
+            bootstrapMajorVersion: 3,//bootstrap的版本要求。
+            alignment:"right",
+            numberOfPages:pageSize,//一页列出多少数据。
+            itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+                switch (type) {
+                    case "first": return "首页";
+                    case "prev": return "上一页";
+                    case "next": return "下一页";
+                    case "last": return "末页";
+                    case "page": return page;
+                }
+            },
+            //当单击操作按钮的时候, 执行该函数, 调用ajax渲染页面
+            onPageClicked: function (event,originalEvent,type,page) {
+                // 把当前点击的页码赋值给currentPage, 调用ajax,渲染页面
+                vm.currPage = page;
+                callback && callback()
+            }
+        });
+    }
+
+
+
+
+
+</script>
+</html>

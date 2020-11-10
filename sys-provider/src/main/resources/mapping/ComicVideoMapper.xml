@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.ComicVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.ComicVideo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="comic_xiaoimg" property="comicXiaoimg" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="playback" property="playback" jdbcType="INTEGER" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="comic_number" property="comicNumber" jdbcType="INTEGER" />
+    <result column="to_update" property="toUpdate" jdbcType="TIMESTAMP" />
+    <result column="ji_number" property="jiNumber" jdbcType="INTEGER" />
+    <result column="comic_title" property="comicTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, comic_xiaoimg, info, playback, img, type, url, comic_number, to_update, 
+    ji_number, comic_title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comic_video
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comic_video
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.ComicVideo" >
+    insert into comic_video (id, name, comic_xiaoimg, 
+      info, playback, img, 
+      type, url, comic_number, 
+      to_update, ji_number, comic_title
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{comicXiaoimg,jdbcType=VARCHAR}, 
+      #{info,jdbcType=VARCHAR}, #{playback,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{comicNumber,jdbcType=INTEGER}, 
+      #{toUpdate,jdbcType=TIMESTAMP}, #{jiNumber,jdbcType=INTEGER}, #{comicTitle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.ComicVideo" >
+    insert into comic_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="comicXiaoimg != null" >
+        comic_xiaoimg,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="playback != null" >
+        playback,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="comicNumber != null" >
+        comic_number,
+      </if>
+      <if test="toUpdate != null" >
+        to_update,
+      </if>
+      <if test="jiNumber != null" >
+        ji_number,
+      </if>
+      <if test="comicTitle != null" >
+        comic_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="comicXiaoimg != null" >
+        #{comicXiaoimg,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="playback != null" >
+        #{playback,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="comicNumber != null" >
+        #{comicNumber,jdbcType=INTEGER},
+      </if>
+      <if test="toUpdate != null" >
+        #{toUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jiNumber != null" >
+        #{jiNumber,jdbcType=INTEGER},
+      </if>
+      <if test="comicTitle != null" >
+        #{comicTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.ComicVideo" >
+    update comic_video
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="comicXiaoimg != null" >
+        comic_xiaoimg = #{comicXiaoimg,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="playback != null" >
+        playback = #{playback,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="comicNumber != null" >
+        comic_number = #{comicNumber,jdbcType=INTEGER},
+      </if>
+      <if test="toUpdate != null" >
+        to_update = #{toUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jiNumber != null" >
+        ji_number = #{jiNumber,jdbcType=INTEGER},
+      </if>
+      <if test="comicTitle != null" >
+        comic_title = #{comicTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.ComicVideo" >
+    update comic_video
+    set name = #{name,jdbcType=VARCHAR},
+      comic_xiaoimg = #{comicXiaoimg,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      playback = #{playback,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      comic_number = #{comicNumber,jdbcType=INTEGER},
+      to_update = #{toUpdate,jdbcType=TIMESTAMP},
+      ji_number = #{jiNumber,jdbcType=INTEGER},
+      comic_title = #{comicTitle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectcount" resultType="java.lang.Long">
+    select count(*) from comic_video
+    <include refid="mysql"></include>
+  </select>
+
+  <select id="listCo" resultType="ComicVideo">
+    <bind name="key_off" value="(currPage -1)*pageSize"/>
+    select * from comic_video
+    <include refid="mysql"></include>
+    limit ${key_off},${pageSize}
+  </select>
+
+  <sql id="mysql">
+    <where>
+      <if test="comi.name!=null and comi.name!=''">
+        and name like '%${comi.name}%'
+      </if>
+    </where>
+  </sql>
+
+
+
+  <delete id="delC" parameterType="string">
+      delete from comic_video where video_id in (${id})
+    </delete>
+
+</mapper>

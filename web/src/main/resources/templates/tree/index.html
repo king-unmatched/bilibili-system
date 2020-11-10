@@ -33,7 +33,7 @@
                     </li>
                 </ul>
                 <!-- 选项卡下内容 -->
-                <div class="tab-content">
+                <div class="tab-content container">
                     <div role="tabpanel" class="tab-pane active" id="home">
                     </div>
                 </div>
@@ -60,6 +60,7 @@
                     data: data,
                     onNodeSelected: function (event, node) {
                         $.addtabs({iframeHeight: 650});
+                        $.addtabs({iframeWidth: 1500});
                         $.addtabs.add({
                             id: node.id,
                             title: node.text,

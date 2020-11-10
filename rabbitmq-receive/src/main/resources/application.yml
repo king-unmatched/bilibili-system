@@ -1,0 +1,21 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: rabbitmq-receive
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  data:
+    mongodb:
+      database: spring_boot
+      host: 192.168.2.25
+      port: 27017
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: D:/tmp/log
+
