@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script></head>
+<style>
+    /* css 代码  */
+</style>
+<script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+<script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+<script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script src="../../jss/jquery.min.js"></script>
+<body>
+<div>
+    <input type="button" shiro:hasPermissions="exsy:moviedaochu" onclick="daoc()" value="动漫信息导出">
+    <div id="main" style="width: 800px;height:400px;" align="center"></div>
+</div>
+<div >
+    <input type="button" shiro:hasPermissions="exsy:anmiedaochu" onclick="daochu()" value="电影信息导出">
+<div id="container" style="min-width:400px;height:400px"></div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        selvideo();
+        selcomicvd();
+    })
+//动漫信息导出
+    function daoc(){
+        location.href="/user/exsynthesize";
+    }
+//电影信息导出
+    function daochu() {
+         location.href="/user/exdianying";
+    }
+    //电影折线图
+    function selvideo(){
+        $.ajax({
+            url: "/user/selVideoBean",
+            type: "post",
+            success: function (data) {
+                var srt=[0];
+                var vvv = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    srt.push(data[i].videoName);
+                    vvv.push(data[i].videoHeat);
+
+                }
+
+                var chart = Highcharts.chart('container', {
+                    title: {
+                        text: '电影浏览量统计图'
+                    },
+                    xAxis: {
+                        categories: srt,
+                    },
+                    yAxis: {
+                        type: 'logarithmic',
+                        minorTickInterval: 0.1
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br />',
+                        pointFormat: 'x = {point.x}, y = {point.y}'
+                    },
+                    series: [{
+                        data: vvv,
+                        pointStart: 1
+                    }]
+                });
+
+
+
+
+
+            }
+        })
+
+    }
+
+    //动漫饼状图
+    function selcomicvd() {
+        $(document).ready(function(){
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            //数据加载完之前先显示一段简单的loading动画
+            myChart.showLoading();
+            var values=[];
+            //数据加载完之前先显示一段简单的loading动画
+            myChart.showLoading();
+            $.ajax({
+                type : "post",
+                async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                url : "/user/selcomicv",    //请求发送到dataActiont处
+                data : {},
+                dataType : "json",        //返回数据形式为json
+                success : function(data) {
+                    //请求成功时执行该函数内容，result即为服务器返回的json对象
+                    if (data) {
+                        for(var i=1;i<data.length;i++){
+                            var test={"value":data[i].playback, "name":data[i].name};
+                            values.push(test);
+
+                        }
+
+                        myChart.hideLoading();    //隐藏加载动画
+                        myChart.setOption(
+                            {
+                                title: {
+                                    text: '动漫受欢迎度统计',
+                                    subtext: '访问量统计',
+                                    left: 'center'
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    left: 'left',
+                                    data: values
+                                },
+                                series: [
+                                    {
+                                        name: '物料来源',
+                                        type: 'pie',
+                                        radius: '60%',
+                                        center: ['50%', '50%'],
+                                        data:values,
+                                        itemStyle: {
+                                            emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0,0,0,0.64)'
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        );
+                    }
+                },
+                error : function(errorMsg) {
+                    //请求失败时执行该函数
+                    alert("图表请求数据失败!");
+                    myChart.hideLoading();
+                }
+            });//end ajax
+        });//刷新方法结束
+    }
+</script>
+</html>

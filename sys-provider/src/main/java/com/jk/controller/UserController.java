@@ -29,4 +29,7 @@ public class UserController {
     public List<String> selprincipList(@RequestParam Integer id){
         return userService.selprincipList(id);
     }
+
+
+
 }
