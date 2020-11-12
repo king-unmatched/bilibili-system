@@ -18,55 +18,43 @@
     <h1>电影管理</h1>
     <form action="" id="list_form">
         <div class="form-group">
-            <label for="videoName" class="col-sm-1 control-label">名称：</label>
+            <label for="newHotName" class="col-sm-1 control-label">名称：</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="videoName" v-model="videoName" placeholder="请输入名称">
+                <input type="text" class="form-control" id="newHotName" v-model="newHotName" placeholder="请输入名称">
             </div>
         </div>
         <button type="button" class="btn btn-default" onclick="selectlistAll();">搜索</button>
     </form>
     <br>
-    <button shiro:hasPermission="video:add" type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" onclick="huixian(0);"><i class="fa fa-file-o"></i> 新建</button>
+    <button shiro:hasPermission="hot:add" type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" onclick="huixian(0);"><i class="fa fa-file-o"></i> 新建</button>
     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
-    <a shiro:hasPermission="video:delete" class="btn btn-default" @click="piliang()">删除</a>
+    <a shiro:hasPermission="hot:delete" class="btn btn-default" @click="piliang()">删除</a>
     <table class="table table-bordered">
         <tr>
             <th><input type="checkbox" name="check" id="qx" onclick="quanxuan()"></th>
             <th>序号</th>
-            <th>图片</th>
+            <th>名称</th>
             <th>时长</th>
-            <th>标志</th>
-            <th>路径</th>
-            <th>名字</th>
-            <th>评分</th>
+            <th>图片</th>
             <th>热度</th>
-            <th>状态</th>
-            <th>备注</th>
-            <th>动态图片</th>
-            <th>简介</th>
+            <th>Url</th>
             <th>操作</th>
         </tr>
-        <tr v-for="we in dyVideo">
-            <td><input type="checkbox" name="check" :value="we.videoId"></td>
-            <td>{{we.videoId}}</td>
-            <td><img style='width:50px;height:50px' :src='we.videoImg'></td>
-            <td>{{we.videoDuration}}</td>
-            <td><img style='width:50px;height:50px' :src='we.videoXiaoimg'></td>
+        <tr v-for="we in hotVideo">
+            <td><input type="checkbox" name="check" :value="we.newHotId"></td>
+            <td>{{we.newHotId}}</td>
+            <td>{{we.newHotName}}</td>
+            <td>{{we.newHotDuration}}</td>
+            <td>{{we.newHeat}}</td>
+            <td><img style='width:50px;height:50px' :src='we.newHotImg'></td>
             <td>
-                <video :poster="we.videoImg" width="100" height="100" controls>
-                <source  :src="we.videoUrl" type='video/webm; codecs="vp8.0, vorbis"'>
-            </video>
+                <video :poster="we.newHotImg" width="100" height="100" controls>
+                    <source  :src="we.newHotUrl" type='video/webm; codecs="vp8.0, vorbis"'>
+                </video>
             </td>
-            <td>{{we.videoName}}</td>
-            <td>{{we.videoTypeid}}</td>
-            <td>{{we.videoHeat}}</td>
-            <td>{{we.videoStatus==1?"会员":we.videoStatus==2?"独播":we.videoStatus==3?"付费":""}}</td>
-            <td>{{we.videoTitle}}</td>
-            <td><img style='width:50px;height:50px' :src='we.smallPicture'></td>
-            <td>{{we.videoInfo}}</td>
             <td>
-                <a shiro:hasPermission="video:update" class="btn btn-default" data-toggle="modal" data-target="#editModal" @click="huixian(we.videoId)">详情</a>
-                <a shiro:hasPermission="video:delete" class="btn btn-default" @click="shanchu(we.videoId)">删除</a>
+                <a shiro:hasPermission="hot:update" class="btn btn-default" data-toggle="modal" data-target="#editModal" @click="huixian(we.newHotId)">详情</a>
+                <a shiro:hasPermission="hot:delete" class="btn btn-default" @click="shanchu(we.newHotId)">删除</a>
             </td>
         </tr>
     </table>
@@ -88,61 +76,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h3 id="myModalLabel">电影管理</h3>
+                <h3 id="myModalLabel">热门视频管理</h3>
             </div>
             <form id="forms" method="post">
                 <div class="modal-body" id="ppa">
                     <table class="table table-bordered table-striped"  width="800px">
-                        <input class="form-control" name="videoId" style="display:none" v-model="list.videoId" readonly="readonly">
+                        <input class="form-control" name="newHotId" style="display:none" v-model="list.newHotId" readonly="readonly">
                         <tr>
-                            <td>图片</td>
+                            <td>名称</td>
                             <td>
-                                <input class="form-control" name="videoImg" v-model="list.videoImg">
+                                <input class="form-control" name="newHotName" v-model="list.newHotName">
                             </td>
                         </tr>
                         <tr>
                             <td>时长</td>
-                            <td> <input class="form-control" name="videoDuration" v-model="list.videoDuration"></td>
-                        </tr>
-                        <tr>
-                            <td>标志</td>
-                        <td> <input class="form-control" name="videoXiaoimg" v-model="list.videoXiaoimg"></td>
-                        </tr>
-                        <tr>
-                            <td>路径</td>
-                            <td> <input class="form-control" name="videoUrl" v-model="list.videoUrl"></td>
-                        </tr>
-                        <tr>
-                            <td>名称</td>
-                            <td> <input class="form-control" name="videoName" v-model="list.videoName"></td>
-                        </tr>
-                        <tr>
-                            <td>评分</td>
-                            <td> <input class="form-control" name="videoTypeid" v-model="list.videoTypeid"></td>
+                            <td> <input class="form-control" name="newHotDuration" v-model="list.newHotDuration"></td>
                         </tr>
                         <tr>
                             <td>热度</td>
-                            <td> <input class="form-control"   name="videoHeat" v-model="list.videoHeat"></td>
+                            <td> <input class="form-control" name="newHeat" v-model="list.newHeat"></td>
                         </tr>
                         <tr>
-                            <td>状态</td>
-                            <td>
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="1">会员
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="2">付费
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="3">独播
-                            </td>
+                            <td>图片</td>
+                            <td> <input class="form-control" name="newHotImg" v-model="list.newHotImg"></td>
                         </tr>
                         <tr>
-                            <td>备注</td>
-                            <td> <input class="form-control"   name="videoTitle" v-model="list.videoTitle"></td>
-                        </tr>
-                        <tr>
-                            <td>动态图片</td>
-                            <td> <input class="form-control"   name="smallPicture" v-model="list.smallPicture"></td>
-                        </tr>
-                        <tr>
-                            <td>简介</td>
-                            <td> <input class="form-control"   name="videoInfo" v-model="list.videoInfo"></td>
+                            <td>路径</td>
+                            <td> <input class="form-control" name="newHotUrl" v-model="list.newHotUrl"></td>
                         </tr>
                     </table>
                 </div>
@@ -159,12 +119,12 @@
     var vm=new Vue({
         el:'#app',
         data:{
-            dyVideo:"",
+            hotVideo:"",
             totalPage:"",
             total:"",
             currPage:"1",
             pageSize:"3",
-            videoName:""
+            newHotName:""
         }
     })
 
@@ -172,7 +132,7 @@
     //新增
     function insert(){
         $.ajax({
-            url:"../video/addVideo",
+            url:"../hot/addHotV",
             type:"post",
             data:$("#forms").serialize(),
             datatype:'json',
@@ -195,7 +155,7 @@
     }
     function huixian(id){
         $.ajax({
-            url:"../video/huixianVideo",
+            url:"../hot/huiHotV",
             type:"post",
             data:{id:id},
             success:function(data){
@@ -220,7 +180,7 @@
         }
 
         $.ajax({
-            url:"../video/deleteVideo",
+            url:"../hot/delHotV",
             type:"post",
             data:{id:ids},
             success:function(){
@@ -234,7 +194,7 @@
     function shanchu(ids){
         alert(ids);
         $.ajax({
-            url:"../video/deleteVideo",
+            url:"../hot/delHotV",
             type:"post",
             data:{id:ids},
             success:function(){
@@ -251,11 +211,11 @@
     function selectlistAll() {
         $.ajax({
             type:"post",
-            url:"../video/selectVideo",
-            data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"videoName":vm.videoName},
+            url:"../hot/selecthotVideo",
+            data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"newHotName":vm.newHotName},
             dataType:"json",
             success: function(result) {
-                vm.dyVideo = result.rows;
+                vm.hotVideo = result.rows;
                 vm.totalPage = result.totalPage;
                 vm.total = result.total;
                 vm.currPage = result.currPage;

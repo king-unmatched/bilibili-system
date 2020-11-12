@@ -22,7 +22,6 @@ public class DyVideoController {
 
     @RequestMapping("selectVideo")
     @ResponseBody
-
     public PageResult selectVideo(Integer currPage, Integer pageSize, DysyVideo dys){
         return dyVideoService.listDy(currPage,pageSize,dys);
     }

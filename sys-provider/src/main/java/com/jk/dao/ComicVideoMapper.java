@@ -19,9 +19,9 @@ public interface ComicVideoMapper {
 
     int updateByPrimaryKey(ComicVideo record);
 
-    Long selectcount(@Param("comc") ComicVideo comi);
+    Long selectcount(@Param("comi") ComicVideo comi);
 
-    List<ComicVideo> listCo(@Param("currPage")Integer currPage, @Param("pageSize")Integer pageSize, @Param("comc")ComicVideo comi);
+    List<ComicVideo> listCo(@Param("currPage")Integer currPage, @Param("pageSize")Integer pageSize, @Param("comi")ComicVideo comi);
 
     void delC(@Param("id") String id);
 }
