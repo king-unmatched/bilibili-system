@@ -35,10 +35,15 @@ public class ShiroConfig {
         map.put("/logout","logout");//注销, 路径和value中的logout一定要一致，这是shiro提供的路径地址和value值
         map.put("/page/toLogin","anon");
         map.put("/user/seluser","anon");
+<<<<<<< HEAD
         map.put("/file/fileTest","anon");
 
+=======
+        map.put("/page/synthesize","anon");
+>>>>>>> 64339034a216e54be9a1053076f9aac5781e75ab
         //放开静态资源
         map.put("/js/**", "anon");
+        map.put("/jss/**", "anon");
         map.put("/css/**", "anon");
         map.put("/images/**", "anon");
         map.put("/img/**", "anon");
