@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.NewVideoBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.NewVideoBean" >
+    <id column="new_hot_id" property="newHotId" jdbcType="INTEGER" />
+    <result column="new_hot_name" property="newHotName" jdbcType="VARCHAR" />
+    <result column="new_hot_duration" property="newHotDuration" jdbcType="VARCHAR" />
+    <result column="new_heat" property="newHeat" jdbcType="INTEGER" />
+    <result column="new_hot_img" property="newHotImg" jdbcType="VARCHAR" />
+    <result column="new_hot_url" property="newHotUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    new_hot_id, new_hot_name, new_hot_duration, new_heat, new_hot_img, new_hot_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from new_video
+    where new_hot_id = #{newHotId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from new_video
+    where new_hot_id = #{newHotId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.NewVideoBean" >
+    insert into new_video (new_hot_id, new_hot_name, new_hot_duration, 
+      new_heat, new_hot_img, new_hot_url
+      )
+    values (#{newHotId,jdbcType=INTEGER}, #{newHotName,jdbcType=VARCHAR}, #{newHotDuration,jdbcType=VARCHAR}, 
+      #{newHeat,jdbcType=INTEGER}, #{newHotImg,jdbcType=VARCHAR}, #{newHotUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.NewVideoBean" >
+    insert into new_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="newHotId != null" >
+        new_hot_id,
+      </if>
+      <if test="newHotName != null" >
+        new_hot_name,
+      </if>
+      <if test="newHotDuration != null" >
+        new_hot_duration,
+      </if>
+      <if test="newHeat != null" >
+        new_heat,
+      </if>
+      <if test="newHotImg != null" >
+        new_hot_img,
+      </if>
+      <if test="newHotUrl != null" >
+        new_hot_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="newHotId != null" >
+        #{newHotId,jdbcType=INTEGER},
+      </if>
+      <if test="newHotName != null" >
+        #{newHotName,jdbcType=VARCHAR},
+      </if>
+      <if test="newHotDuration != null" >
+        #{newHotDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="newHeat != null" >
+        #{newHeat,jdbcType=INTEGER},
+      </if>
+      <if test="newHotImg != null" >
+        #{newHotImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newHotUrl != null" >
+        #{newHotUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.NewVideoBean" >
+    update new_video
+    <set >
+      <if test="newHotName != null" >
+        new_hot_name = #{newHotName,jdbcType=VARCHAR},
+      </if>
+      <if test="newHotDuration != null" >
+        new_hot_duration = #{newHotDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="newHeat != null" >
+        new_heat = #{newHeat,jdbcType=INTEGER},
+      </if>
+      <if test="newHotImg != null" >
+        new_hot_img = #{newHotImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newHotUrl != null" >
+        new_hot_url = #{newHotUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where new_hot_id = #{newHotId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.NewVideoBean" >
+    update new_video
+    set new_hot_name = #{newHotName,jdbcType=VARCHAR},
+      new_hot_duration = #{newHotDuration,jdbcType=VARCHAR},
+      new_heat = #{newHeat,jdbcType=INTEGER},
+      new_hot_img = #{newHotImg,jdbcType=VARCHAR},
+      new_hot_url = #{newHotUrl,jdbcType=VARCHAR}
+    where new_hot_id = #{newHotId,jdbcType=INTEGER}
+  </update>
+  <insert id="inserNewVideo" parameterType="NewVideoBean">
+    insert into new_video(new_hot_name,new_hot_duration,new_heat,new_hot_img,new_hot_url) values(#{newHotName},#{newHotDuration},#{newHeat},#{newHotImg},#{newHotUrl})
+  </insert>
+</mapper>

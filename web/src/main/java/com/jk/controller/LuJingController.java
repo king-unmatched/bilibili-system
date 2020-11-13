@@ -27,4 +27,9 @@ public class LuJingController {
     public String synthesize(){
         return "tree/synthesize";
     }
+
+    @RequestMapping("filess")
+    public String files(){
+        return "tree/filess";
+    }
 }

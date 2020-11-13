@@ -1,9 +1,6 @@
 package com.jk.service.impl;
 
-import com.jk.entity.ComicvBean;
-import com.jk.entity.TreeBean;
-import com.jk.entity.UserBean;
-import com.jk.entity.VideoBean;
+import com.jk.entity.*;
 import com.jk.service.UserService;
 import org.springframework.stereotype.Component;
 
@@ -38,5 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<ComicvBean> selcomicv() {
         return null;
+    }
+
+    @Override
+    public void inserNewVideo(NewVideoBean newVideoBean) {
+
     }
 }
