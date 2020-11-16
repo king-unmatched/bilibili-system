@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.ToneSelfBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.ToneSelfBean" >
+    <id column="oneself_id" property="oneselfId" jdbcType="INTEGER" />
+    <result column="oneself_name" property="oneselfName" jdbcType="VARCHAR" />
+    <result column="oneself_url" property="oneselfUrl" jdbcType="VARCHAR" />
+    <result column="oneself_img" property="oneselfImg" jdbcType="VARCHAR" />
+    <result column="oneself_status" property="oneselfStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oneself_id, oneself_name, oneself_url, oneself_img, oneself_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_oneself
+    where oneself_id = #{oneselfId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_oneself
+    where oneself_id = #{oneselfId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.ToneSelfBean" >
+    insert into t_oneself (oneself_id, oneself_name, oneself_url, 
+      oneself_img, oneself_status)
+    values (#{oneselfId,jdbcType=INTEGER}, #{oneselfName,jdbcType=VARCHAR}, #{oneselfUrl,jdbcType=VARCHAR}, 
+      #{oneselfImg,jdbcType=VARCHAR}, #{oneselfStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.ToneSelfBean" >
+    insert into t_oneself
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oneselfId != null" >
+        oneself_id,
+      </if>
+      <if test="oneselfName != null" >
+        oneself_name,
+      </if>
+      <if test="oneselfUrl != null" >
+        oneself_url,
+      </if>
+      <if test="oneselfImg != null" >
+        oneself_img,
+      </if>
+      <if test="oneselfStatus != null" >
+        oneself_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oneselfId != null" >
+        #{oneselfId,jdbcType=INTEGER},
+      </if>
+      <if test="oneselfName != null" >
+        #{oneselfName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfUrl != null" >
+        #{oneselfUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfImg != null" >
+        #{oneselfImg,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfStatus != null" >
+        #{oneselfStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.ToneSelfBean" >
+    update t_oneself
+    <set >
+      <if test="oneselfName != null" >
+        oneself_name = #{oneselfName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfUrl != null" >
+        oneself_url = #{oneselfUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfImg != null" >
+        oneself_img = #{oneselfImg,jdbcType=VARCHAR},
+      </if>
+      <if test="oneselfStatus != null" >
+        oneself_status = #{oneselfStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oneself_id = #{oneselfId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.ToneSelfBean" >
+    update t_oneself
+    set oneself_name = #{oneselfName,jdbcType=VARCHAR},
+      oneself_url = #{oneselfUrl,jdbcType=VARCHAR},
+      oneself_img = #{oneselfImg,jdbcType=VARCHAR},
+      oneself_status = #{oneselfStatus,jdbcType=VARCHAR}
+    where oneself_id = #{oneselfId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selToneSelfBean" resultType="ToneSelfBean">
+    select * from t_oneself where oneself_status=0
+  </select>
+  <update id="upstatus" parameterType="ToneSelfBean">
+    update t_oneself set oneself_status=1 where oneself_id=#{ids}
+  </update>
+</mapper>

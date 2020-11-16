@@ -32,4 +32,12 @@ public class LuJingController {
     public String files(){
         return "tree/filess";
     }
+
+    @RequestMapping("tones")
+    public String tone(){
+        return "tree/tonesefl";
+    }
+
+
+
 }

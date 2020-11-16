@@ -141,23 +141,6 @@
         })
     }
 
-        function commitImg() {
-            var formData = new FormData();
-            formData.append("file", $("#fileElem")[0].files[0]);
-            $.ajax({
-                url: "/user/headImg",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    $("#imgurl").val(data)
-                }
-            })
-
-
-        }
-
 
 
     fileInput.onchange = function () {
