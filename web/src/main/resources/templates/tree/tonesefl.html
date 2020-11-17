@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap.addtabs.css">
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap-treeview.min.css">
+    <script src="../jss/jquery.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap.addtabs.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap-treeview.min.js"></script>
+    <script src="../jss/vue/vue.min.js"></script>
+</head>
+
+<body>
+<div class="container" id="app">
+        <table class="table table-bordered" >
+            <thead>
+                        <tr>
+                            <td>标题</td>
+                            <td>图片</td>
+                            <td>操作</td>
+                        </tr>
+            </thead>
+            <tbody>
+                    <tr v-for="ss in seltonesefl">
+                        <td>{{ss.oneselfName}}</td>
+                        <td><img width="50px" height="45px" :src="ss.oneselfImg"></td>
+                        <td>
+                            <input type="button" shiro:hasPermissions="tone:uptones" @click="shenhe(ss.oneselfId)" value="审核">
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</div>
+<script type="text/javascript">
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            seltonesefl:""
+        }
+    })
+
+    $(function () {
+        seltones();
+    })
+
+
+    function seltones() {
+         $.ajax({
+             url:"/tone/selToneSelf",
+             type:"post",
+             success:function (data) {
+
+                vm.seltonesefl=data;
+             }
+         })
+    }
+
+        function shenhe(ids) {
+           $.ajax({
+               url:"/tone/upstatus",
+               type:"post",
+               data:{ids:ids},
+               success:function () {
+                   seltones();
+               }
+           })
+        }
+
+</script>
+</body>
+</html>

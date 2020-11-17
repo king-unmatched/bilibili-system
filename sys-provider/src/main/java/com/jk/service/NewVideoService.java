@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.entity.NewVideo;
+import com.jk.entity.NewVideoBean;
 import com.jk.pojo.PageResult;
 
 public interface NewVideoService {
@@ -11,4 +12,6 @@ public interface NewVideoService {
     void delHot(String id);
 
     NewVideo huiHot(Integer id);
+
+    void inserNewVideo(NewVideoBean newVideoBean);
 }

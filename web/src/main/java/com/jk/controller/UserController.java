@@ -1,17 +1,10 @@
 package com.jk.controller;
 
-
-
-
-
-
 import com.alibaba.fastjson.JSONArray;
-import com.jk.entity.ComicvBean;
-import com.jk.entity.TreeBean;
-import com.jk.entity.UserBean;
-import com.jk.entity.VideoBean;
+import com.jk.entity.*;
 import com.jk.pojo.PoiUtils;
 import com.jk.service.UserService;
+import com.jk.utils.AliyunOSSUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -19,12 +12,16 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
-   @Autowired
+   @Resource
     private UserService userService;
 
     /**
@@ -120,6 +117,27 @@ public class UserController {
          map.put("电影名称","videoName");
          map.put("浏览量","videoHeat");
          PoiUtils.exportExcel(response,dataarray,map,"电影浏览信息","电影浏览表格.xlsx");
+    }
+
+    @RequestMapping(value = "/headImg", method = RequestMethod.POST)
+    public Object headImg(MultipartFile file)  {
+
+        try {
+            MultipartFile multipartFile = file;
+            String fileName = file.getOriginalFilename();
+            String url = AliyunOSSUtil.uploadFile(fileName, multipartFile);
+            System.out.println(url);
+            return url;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "false";
+    }
+
+
+    @RequestMapping("inserNewVideo")
+    public void inserNewVideo(NewVideoBean newVideoBean){
+        userService.inserNewVideo(newVideoBean);
     }
 
 }

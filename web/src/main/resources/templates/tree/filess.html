@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cupload</title>
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap.addtabs.css">
+    <link rel="stylesheet" href="../jss/bootstrap/css/bootstrap-treeview.min.css">
+    <script src="../jss/jquery.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap.addtabs.min.js"></script>
+    <script src="../jss/bootstrap/js/bootstrap-treeview.min.js"></script>
+</head>
+<body>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">添加</h3>
+    </div>
+    <form id="myforms" method="post">
+        <div class="modal-body">
+            <table class="table table-bordered table-striped" width="800px">
+                <input class="form-control" name="id" style="display:none" readonly="readonly"
+                       v-model="list.id">
+                <tr>
+                    <td>新闻热点</td>
+                    <td><input class="form-control" type="text" name="newHotName" placeholder="新闻热点"></td>
+                </tr>
+                <tr>
+                    <td>视频时长</td>
+                    <td>
+                        <input class="form-control" type="text" name="newHotDuration" placeholder="视频时长">
+                    </td>
+                </tr>
+                <tr>
+                    <td>热度</td>
+                    <td><input class="form-control" type="text" name="newHeat" placeholder="热度"></td>
+                </tr>
+
+                <tr>
+                    <td>封面图片</td>
+                    <td>
+                        <a id="fileSelect" href="javascript:commitImg();" >
+                            <img id="avatar_img" width="128px" height="128px"  style="background: #fff;margin-top: 4px;margin-left: 67px;"class="img-circle" title="点击选择头像"/>
+                        </a>
+                        <p th:text="${name}" style="font-size: 18px;margin: 10px 17px 4px;"></p>
+                        <!--<input type="file" id="fileElem" multiple accept="image/*" style="display: none" onchange="handleFiles(this.files)"/>-->
+                        <input type="file" id="fileElem" multiple accept="image/*" style="display: none" onchange="handleFiles(this.files)">
+                        <input type="text" id="imgurl" style="display:none " name="newHotImg">
+                    </td>
+                </tr>
+                <tr>
+                    <td>视频</td>
+                    <td>
+                        <input type="file" id="fileInput" accept="video/*" capture="camcorder">
+                        <input type="text" id="onloadends" style="display:none " name="newHotUrl">
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" onclick="insert()">保存</button>
+        </div>
+    </form>
+</div>
+
+
+</body>
+<script type="text/javascript">
+
+    $(function () {
+        $("#avatar_img").attr("src", "../jss/img/tick.png");
+    })
+
+    //新增视频图片
+    function insert(){
+        $.ajax({
+            url:"/user/inserNewVideo",
+            type:"post",
+            data:$("#myforms").serialize(),
+            success:function () {
+             alert(上传成功);
+            }
+        })
+    }
+
+    // 上传头像
+
+    let fileSelect = document.getElementById("fileSelect"),
+        fileElem = document.getElementById("fileElem");
+    fileSelect.addEventListener("click", function (e) {
+        if (fileElem) {
+            fileElem.click();
+        }
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
+    function handleFiles(files) {
+        var choose_file = files[0];
+        // 截取图片名称小数点后的字符串
+        var ftype = choose_file.name.substring(choose_file.name.lastIndexOf(".") + 1);
+        // 校验格式是否是图片类型
+        if (ftype == "jpg" || ftype == "png" || ftype == "jpeg" || ftype == "JPG") {
+            // 限制大小，照片大小不能超过1M
+            var size = choose_file.size / 1024 / 1024;
+            if (size > 1) {
+                layer.alert("头像不能大于1M", function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            // 实例化一个阅读器对象
+            var reader = new FileReader();
+            // 读取文件的路径，没有返回值,结果在reader.result里
+            reader.readAsDataURL(choose_file);
+            // 读取需要时间，读完后再修改图片路径
+            reader.onloadend = function () {
+                // 回显
+                $("#avatar_img").attr("src", this.result);
+                commitImg();
+            }
+        } else {
+            layer.alert("头像格式不对，请重新选择！", function (index) {
+                layer.close(index);
+            });
+            return false;
+        }
+    }
+    function commitImg() {
+        var formData = new FormData();
+        formData.append("file",$("#fileElem")[0].files[0]);
+        $.ajax({
+            url: "/user/headImg",
+            type: "POST",
+            data: formData,
+            processData:false,
+            contentType:false,
+            success:function (data) {
+                $("#imgurl").val(data)
+            }
+        })
+    }
+
+
+
+    fileInput.onchange = function () {
+        var file = this.files[0];
+        if (!/video\/\w+/.test(file.type)) {/!*可以把autio改成其他文件类型 比如 image*!/
+            alert("只能选择音频文件")
+            return false;
+        }
+
+        console.log(file.type)/*/!*文件类型*!*/
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = function () {
+
+                var audioBlob = convertBase64UrlToBlob(reader.result, file.type);
+                /* request("audio",audioBlob)/!*这里是我的ajax请求*!/*/
+                request();
+
+        };
+    };
+
+    function convertBase64UrlToBlob(urlData,type){   /!*转成二进制对象*!/
+      var bytes=window.btoa(urlData.split(',')[1]);
+        /!*var bytes = urlData.name.substring(urlData.name.lastIndexOf(".") + 1);*!/
+        var ab = new ArrayBuffer(bytes.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < bytes.length; i++) {
+            ia[i] = bytes.charCodeAt(i);
+        }
+        return new Blob( [ab] , {type : type});
+
+    }
+    function request(){
+        var formData = new FormData();/*创建formData对象*/
+
+        formData.append("file", $("#fileInput")[0].files[0]);
+        $.ajax({
+            url:"/user/headImg",
+            type:"post",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+             $("#onloadends").val(data);
+                alert("视频上传成功！！！");
+            }
+
+        })
+
+    }
+
+    </script>
+
+
+</html>

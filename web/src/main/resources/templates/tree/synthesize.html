@@ -9,6 +9,7 @@
 <style>
     /* css 代码  */
 </style>
+
 <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
 <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
@@ -19,6 +20,9 @@
     <div id="main" style="width: 800px;height:400px;" align="center"></div>
 </div>
 <div >
+    <video width="960" height="420" controls autoplay loop>
+        <source  src="https://ggkkmuup9wuugp6ep8d.exp.bcevod.com/mda-kjrtvj81qwjk3bq3/navideo720/mda-kjrtvj81qwjk3bq3.mp4" type="video/mp4">
+    </video>
     <input type="button" shiro:hasPermissions="exsy:anmiedaochu" onclick="daochu()" value="电影信息导出">
 <div id="container" style="min-width:400px;height:400px"></div>
 </div>
@@ -35,6 +39,11 @@
 //电影信息导出
     function daochu() {
          location.href="/user/exdianying";
+    }
+
+    //下载
+    function xiazai(){
+        location.href="/user/sel?fileUrl=hdfs://192.168.2.34:9000/home/img/2020-11-08/1604824940517.jpg";
     }
     //电影折线图
     function selvideo(){
@@ -71,9 +80,6 @@
                         pointStart: 1
                     }]
                 });
-
-
-
 
 
             }
