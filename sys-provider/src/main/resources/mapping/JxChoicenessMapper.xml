@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.JxChoicenessMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.entity.JxChoiceness" >
+    <id column="choiceness_id" property="choicenessId" jdbcType="INTEGER" />
+    <result column="choiceness_zhongxin" property="choicenessZhongxin" jdbcType="VARCHAR" />
+    <result column="choiceness_touxiang" property="choicenessTouxiang" jdbcType="VARCHAR" />
+    <result column="choiceness_info" property="choicenessInfo" jdbcType="VARCHAR" />
+    <result column="choiceness_name" property="choicenessName" jdbcType="VARCHAR" />
+    <result column="choiceness_sc" property="choicenessSc" jdbcType="VARCHAR" />
+    <result column="choiceness_url" property="choicenessUrl" jdbcType="VARCHAR" />
+    <result column="choiceness_img" property="choicenessImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    choiceness_id, choiceness_zhongxin, choiceness_touxiang, choiceness_info, choiceness_name, 
+    choiceness_sc, choiceness_url, choiceness_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jx_choiceness
+    where choiceness_id = #{choicenessId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jx_choiceness
+    where choiceness_id = #{choicenessId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jk.entity.JxChoiceness" >
+    insert into jx_choiceness (choiceness_id, choiceness_zhongxin, 
+      choiceness_touxiang, choiceness_info, choiceness_name, 
+      choiceness_sc, choiceness_url, choiceness_img
+      )
+    values (#{choicenessId,jdbcType=INTEGER}, #{choicenessZhongxin,jdbcType=VARCHAR}, 
+      #{choicenessTouxiang,jdbcType=VARCHAR}, #{choicenessInfo,jdbcType=VARCHAR}, #{choicenessName,jdbcType=VARCHAR}, 
+      #{choicenessSc,jdbcType=VARCHAR}, #{choicenessUrl,jdbcType=VARCHAR}, #{choicenessImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jk.entity.JxChoiceness" >
+    insert into jx_choiceness
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="choicenessId != null" >
+        choiceness_id,
+      </if>
+      <if test="choicenessZhongxin != null" >
+        choiceness_zhongxin,
+      </if>
+      <if test="choicenessTouxiang != null" >
+        choiceness_touxiang,
+      </if>
+      <if test="choicenessInfo != null" >
+        choiceness_info,
+      </if>
+      <if test="choicenessName != null" >
+        choiceness_name,
+      </if>
+      <if test="choicenessSc != null" >
+        choiceness_sc,
+      </if>
+      <if test="choicenessUrl != null" >
+        choiceness_url,
+      </if>
+      <if test="choicenessImg != null" >
+        choiceness_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="choicenessId != null" >
+        #{choicenessId,jdbcType=INTEGER},
+      </if>
+      <if test="choicenessZhongxin != null" >
+        #{choicenessZhongxin,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessTouxiang != null" >
+        #{choicenessTouxiang,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessInfo != null" >
+        #{choicenessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessName != null" >
+        #{choicenessName,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessSc != null" >
+        #{choicenessSc,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessUrl != null" >
+        #{choicenessUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessImg != null" >
+        #{choicenessImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jk.entity.JxChoiceness" >
+    update jx_choiceness
+    <set >
+      <if test="choicenessZhongxin != null" >
+        choiceness_zhongxin = #{choicenessZhongxin,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessTouxiang != null" >
+        choiceness_touxiang = #{choicenessTouxiang,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessInfo != null" >
+        choiceness_info = #{choicenessInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessName != null" >
+        choiceness_name = #{choicenessName,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessSc != null" >
+        choiceness_sc = #{choicenessSc,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessUrl != null" >
+        choiceness_url = #{choicenessUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="choicenessImg != null" >
+        choiceness_img = #{choicenessImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where choiceness_id = #{choicenessId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jk.entity.JxChoiceness" >
+    update jx_choiceness
+    set choiceness_zhongxin = #{choicenessZhongxin,jdbcType=VARCHAR},
+      choiceness_touxiang = #{choicenessTouxiang,jdbcType=VARCHAR},
+      choiceness_info = #{choicenessInfo,jdbcType=VARCHAR},
+      choiceness_name = #{choicenessName,jdbcType=VARCHAR},
+      choiceness_sc = #{choicenessSc,jdbcType=VARCHAR},
+      choiceness_url = #{choicenessUrl,jdbcType=VARCHAR},
+      choiceness_img = #{choicenessImg,jdbcType=VARCHAR}
+    where choiceness_id = #{choicenessId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectcount" resultType="java.lang.Long">
+    select count(*) from jx_choiceness
+    <include refid="mysql"></include>
+  </select>
+
+  <select id="selectJx" resultType="JxChoiceness">
+    <bind name="key_off" value="(currPage -1)*pageSize"/>
+    select * from jx_choiceness
+    <include refid="mysql"></include>
+    limit ${key_off},${pageSize}
+  </select>
+
+  <sql id="mysql">
+    <where>
+      <if test="jx.choicenessName!=null and jx.choicenessName!=''">
+        and choiceness_name like '%${jx.choicenessName}%'
+      </if>
+    </where>
+  </sql>
+
+  <delete id="delJx" parameterType="string">
+      delete from jx_choiceness where choiceness_id in (${id})
+    </delete>
+
+</mapper>

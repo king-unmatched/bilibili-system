@@ -3,16 +3,11 @@ package com.jk.controller;
 import com.jk.entity.DysyVideo;
 import com.jk.pojo.PageResult;
 import com.jk.service.DyVideoService;
-import com.jk.utils.FileUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("video")
@@ -52,9 +47,5 @@ public class DyVideoController {
     public DysyVideo huixianVideo(Integer id){
        return dyVideoService.huixian(id);
     }
-    @RequestMapping("uploadImg")
-    @ResponseBody
-        public String uploadImg(MultipartFile imgfile, HttpServletRequest request) throws IllegalStateException, IOException {
-        return FileUtil.uploadFile(imgfile, request);
-    }
+
 }

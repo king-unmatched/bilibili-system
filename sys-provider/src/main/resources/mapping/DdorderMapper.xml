@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.DdorderMapper" >
+
+  <insert id="addOr" parameterType="Ddorder" >
+    insert into dd_order (order_id, order_num, order_name, 
+      order_price, order_count, order_createtime )
+    values (#{orderId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, 
+      #{orderPrice,jdbcType=DECIMAL}, #{orderCount,jdbcType=INTEGER}, #{orderCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="updateOr" parameterType="Ddorder" >
+    update dd_order
+    <set >
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderName != null" >
+        order_name = #{orderName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCount != null" >
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreatetime != null" >
+        order_createtime = #{orderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectcount" resultType="java.lang.Long">
+    select count(*) from dd_order
+    <include refid="mysql"></include>
+  </select>
+  <resultMap id="BaseResultMap" type="com.jk.entity.Ddorder" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="order_name" property="orderName" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="order_count" property="orderCount" jdbcType="INTEGER" />
+    <result column="order_createtime" property="orderCreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_num, order_name, order_price, order_count, order_createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from dd_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+
+  <select id="listOr" resultType="DdOrder">
+    <bind name="key_off" value="(currPage -1)*pageSize"/>
+    select * from dd_order
+    <include refid="mysql"></include>
+    limit ${key_off},${pageSize}
+  </select>
+
+  <sql id="mysql">
+    <where>
+      <if test="dd.orderName!=null and dd.orderName!=''">
+        and name like '%${dd.orderName}%'
+      </if>
+    </where>
+  </sql>
+
+
+  <delete id="deleteOr" parameterType="string">
+      delete from dd_order where order_id in (${id})
+    </delete>
+</mapper>

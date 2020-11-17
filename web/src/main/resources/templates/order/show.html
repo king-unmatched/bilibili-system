@@ -10,66 +10,45 @@
     <link rel="stylesheet" href="../jss/css/bootstarp/bootstrap.min.css">
     <script src="../jss/bootstraps/bootstrap-paginator.js"></script>
 
-
-
-
 </head>
 <body>
 <div id="app" class="container">
-    <h1>电影管理</h1>
+    <h1>订单管理</h1>
     <form action="" id="list_form">
         <div class="form-group">
-            <label for="videoName" class="col-sm-1 control-label">名称：</label>
+            <label for="orderName" class="col-sm-1 control-label">名称：</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="videoName" v-model="videoName" placeholder="请输入名称">
+                <input type="text" class="form-control" id="orderName" v-model="orderName" placeholder="请输入名称">
             </div>
         </div>
         <button type="button" class="btn btn-default" onclick="selectlistAll();">搜索</button>
     </form>
     <br>
-    <button shiro:hasPermission="video:add" type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" onclick="huixian(0);"><i class="fa fa-file-o"></i> 新建</button>
+    <button shiro:hasPermission="order:add" type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" onclick="huixian(0);"><i class="fa fa-file-o"></i> 新建</button>
     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
-    <a shiro:hasPermission="video:delete" class="btn btn-default" @click="piliang()">删除</a>
+    <a shiro:hasPermission="order:delete" class="btn btn-default" @click="piliang()">删除</a>
     <table class="table table-bordered">
         <tr>
             <th><input type="checkbox" name="check" id="qx" onclick="quanxuan()"></th>
             <th>序号</th>
-            <th>图片</th>
-            <th>时长</th>
-            <th>标志</th>
-            <th>路径</th>
-            <th>名字</th>
-            <th>评分</th>
-            <th>热度</th>
-            <th>状态</th>
-            <th>备注</th>
-            <th>动态图片</th>
-            <th>简介</th>
+            <th>编号</th>
+            <th>名称</th>
+            <th>价钱</th>
+            <th>数量</th>
+            <th>时期</th>
             <th>操作</th>
         </tr>
-        <tr v-for="we in dyVideo">
-            <td><input type="checkbox" name="check" :value="we.videoId"></td>
-            <td>{{we.videoId}}</td>
-            <td><img style='width:50px;height:50px' :src='we.videoImg'></td>
-            <td>{{we.videoDuration}}</td>
+        <tr v-for="we in order">
+            <td><input type="checkbox" name="check" :value="we.orderId"></td>
+            <td>{{we.orderId}}</td>
+            <td>{{we.orderNum}}</td>
+            <td>{{we.orderName}}</td>
+            <td>{{we.orderPrice}}</td>
+            <td>{{we.orderCount}}</td>
+            <td>{{we.orderCreatetime}}</td>
             <td>
-                <img style='width:50px;height:50px' :src='we.videoXiaoimg'>
-            </td>
-            <td>
-                <video :poster="we.videoImg" width="100" height="100" controls>
-                <source  :src="we.videoUrl" type='video/webm; codecs="vp8.0, vorbis"'>
-            </video>
-            </td>
-            <td>{{we.videoName}}</td>
-            <td>{{we.videoTypeid}}</td>
-            <td>{{we.videoHeat}}</td>
-            <td>{{we.videoStatus==1?"会员":we.videoStatus==2?"独播":we.videoStatus==3?"付费":""}}</td>
-            <td>{{we.videoTitle}}</td>
-            <td><img style='width:50px;height:50px' :src='we.smallPicture'></td>
-            <td>{{we.videoInfo}}</td>
-            <td>
-                <a shiro:hasPermission="video:update" class="btn btn-default" data-toggle="modal" data-target="#editModal" @click="huixian(we.videoId)">详情</a>
-                <a shiro:hasPermission="video:delete" class="btn btn-default" @click="shanchu(we.videoId)">删除</a>
+                <a shiro:hasPermission="order:update" class="btn btn-default" data-toggle="modal" data-target="#editModal" @click="huixian(we.orderId)">详情</a>
+                <a shiro:hasPermission="order:delete" class="btn btn-default" @click="shanchu(we.orderId)">删除</a>
             </td>
         </tr>
     </table>
@@ -91,61 +70,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h3 id="myModalLabel">电影管理</h3>
+                <h3 id="myModalLabel">订单管理</h3>
             </div>
             <form id="forms" method="post">
                 <div class="modal-body" id="ppa">
                     <table class="table table-bordered table-striped"  width="800px">
-                        <input class="form-control" name="videoId" style="display:none" v-model="list.videoId" readonly="readonly">
+                        <input class="form-control" name="orderId" style="display:none" v-model="list.orderId" readonly="readonly">
                         <tr>
-                            <td>图片</td>
+                            <td>编号</td>
                             <td>
-                                <input class="form-control" name="videoImg" v-model="list.videoImg">
+                                <input class="form-control" name="orderNum" v-model="list.orderNum">
                             </td>
                         </tr>
                         <tr>
-                            <td>时长</td>
-                            <td> <input class="form-control" name="videoDuration" v-model="list.videoDuration"></td>
+                            <td>名字</td>
+                            <td> <input class="form-control" name="orderName" v-model="list.orderName"></td>
                         </tr>
                         <tr>
-                            <td>标志</td>
-                        <td> <input class="form-control" name="videoXiaoimg" v-model="list.videoXiaoimg"></td>
+                            <td>价钱</td>
+                            <td> <input class="form-control" name="orderPrice" v-model="list.orderPrice"></td>
                         </tr>
                         <tr>
-                            <td>路径</td>
-                            <td> <input class="form-control" name="videoUrl" v-model="list.videoUrl"></td>
+                            <td>数量</td>
+                            <td> <input class="form-control" name="orderCount" v-model="list.orderCount"></td>
                         </tr>
                         <tr>
-                            <td>名称</td>
-                            <td> <input class="form-control" name="videoName" v-model="list.videoName"></td>
-                        </tr>
-                        <tr>
-                            <td>评分</td>
-                            <td> <input class="form-control" name="videoTypeid" v-model="list.videoTypeid"></td>
-                        </tr>
-                        <tr>
-                            <td>热度</td>
-                            <td> <input class="form-control"   name="videoHeat" v-model="list.videoHeat"></td>
-                        </tr>
-                        <tr>
-                            <td>状态</td>
-                            <td>
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="1">会员
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="2">付费
-                                <input  type="radio"  name="videoStatus" v-model="list.videoStatus" value="3">独播
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>备注</td>
-                            <td> <input class="form-control"   name="videoTitle" v-model="list.videoTitle"></td>
-                        </tr>
-                        <tr>
-                            <td>动态图片</td>
-                            <td> <input class="form-control"   name="smallPicture" v-model="list.smallPicture"></td>
-                        </tr>
-                        <tr>
-                            <td>简介</td>
-                            <td> <input class="form-control"   name="videoInfo" v-model="list.videoInfo"></td>
+                            <td>日期</td>
+                            <td> <input class="form-control" type="date" name="orderCreatetime" v-model="list.orderCreatetime"></td>
                         </tr>
                     </table>
                 </div>
@@ -159,15 +110,15 @@
 </div>
 </body>
 <script type="text/javascript">
-        var vm=new Vue({
+    var vm=new Vue({
         el:'#app',
         data:{
-            dyVideo:"",
+            order:"",
             totalPage:"",
             total:"",
             currPage:"1",
             pageSize:"3",
-            videoName:""
+            orderName:""
         }
     })
 
@@ -175,7 +126,7 @@
     //新增
     function insert(){
         $.ajax({
-            url:"../video/addVideo",
+            url:"../order/addOrder",
             type:"post",
             data:$("#forms").serialize(),
             datatype:'json',
@@ -198,7 +149,7 @@
     }
     function huixian(id){
         $.ajax({
-            url:"../video/huixianVideo",
+            url:"../order/huixianOrder",
             type:"post",
             data:{id:id},
             success:function(data){
@@ -223,7 +174,7 @@
         }
 
         $.ajax({
-            url:"../video/deleteVideo",
+            url:"../order/deleteOrder",
             type:"post",
             data:{id:ids},
             success:function(){
@@ -237,7 +188,7 @@
     function shanchu(ids){
         alert(ids);
         $.ajax({
-            url:"../video/deleteVideo",
+            url:"../order/deleteOrder",
             type:"post",
             data:{id:ids},
             success:function(){
@@ -254,11 +205,11 @@
     function selectlistAll() {
         $.ajax({
             type:"post",
-            url:"../video/selectVideo",
-            data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"videoName":vm.videoName},
+            url:"../order/selectOr",
+            data:{"currPage":vm.currPage,"pageSize":vm.pageSize,"orderName":vm.orderName},
             dataType:"json",
             success: function(result) {
-                vm.dyVideo = result.rows;
+                vm.order = result.rows;
                 vm.totalPage = result.totalPage;
                 vm.total = result.total;
                 vm.currPage = result.currPage;
